@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "eslint-config-prettier": "^9.1.0",
+    "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
