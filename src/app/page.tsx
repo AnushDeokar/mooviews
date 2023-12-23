@@ -1,4 +1,5 @@
 import { ImageSlider } from '@/components/image-slider';
+import MovieCategory from '@/components/movie-category';
 
 export default function Home() {
   return (
@@ -28,6 +29,10 @@ export default function Home() {
           <div className='items relative flex items-center justify-center pt-24 md:mt-0 md:hidden md:pt-0'>
             <ImageSlider height={150} width={200} />
           </div>
+        </div>
+
+        <div className='mt-32'>
+          <MovieCategory />
         </div>
       </div>
     </main>

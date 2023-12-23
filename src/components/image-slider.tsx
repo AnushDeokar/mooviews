@@ -19,8 +19,6 @@ const indicatorPadding = 10;
 const indicatorWidth = images.length * indicatorSize;
 const indicatorPaddingTotal = (images.length - 1) * indicatorPadding;
 const indicatorWidthTotal = indicatorWidth + indicatorPaddingTotal;
-console.log(indicatorWidthTotal);
-// const indicatorWidthTotal = 400;
 const indicatorAlpha = 0.3;
 
 export function ImageSlider({
