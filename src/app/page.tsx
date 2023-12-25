@@ -1,3 +1,4 @@
+import { AuthModalComponent } from '@/components/auth-modal';
 import { ImageSlider } from '@/components/image-slider';
 import MovieCategory from '@/components/movie-category';
 
@@ -10,9 +11,10 @@ export default function Home() {
             M<span className='hidden text-3xl md:inline'>ooviews</span>
           </h1>
           <div>
-            <button className='rounded-md bg-red-700 px-4 py-2 text-[14px] font-semibold text-white'>
+            {/* <button className='rounded-md bg-red-700 px-4 py-2 text-[14px] font-semibold text-white'>
               Sign in
-            </button>
+            </button> */}
+            <AuthModalComponent />
           </div>
         </nav>
 
