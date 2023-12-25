@@ -106,9 +106,9 @@ export function ImageSlider({
               cursor: 'pointer',
             }}
             animate={{
-              opacity: current === index - 1 ? 1 : indicatorAlpha,
+              opacity: current === index ? 1 : indicatorAlpha,
             }}
-            onTap={() => setCurrent(index - 1)}
+            onTap={() => setCurrent(index)}
             key={index}
           />
         );
