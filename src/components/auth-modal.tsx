@@ -1,12 +1,14 @@
 'use client';
 import { useState } from 'react';
 import { Modal } from 'keep-react';
-import { TextInput } from 'keep-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { signIn } from 'next-auth/react';
+import { User } from '@prisma/client';
 
-export const AuthModalComponent = () => {
+export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
   const [showModalX, setShowModalX] = useState(false);
   const [isSignin, setIsSignIn] = useState<boolean>(true);
 
@@ -22,12 +24,42 @@ export const AuthModalComponent = () => {
     setShowModalX(!showModalX);
   };
 
+  const handleSignIn = async (data: any) => {
+    await signIn('credentials', {
+      ...data,
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          console.log('Invalid Credentials!');
+        } else if (callback?.ok) {
+          console.log('Successfully Logged In!');
+        }
+      })
+      .catch(() => console.log('Something went wrong!'));
+  };
   const onSubmit = async (data: any) => {
     console.log('called');
     try {
       // await fetch()
-      console.log(data.email);
-      console.log(data.password);
+      if (!isSignin) {
+        await axios
+          .post('/api/register', data)
+          .then(() =>
+            signIn('credentials', {
+              ...data,
+              redirect: false,
+            })
+          )
+          .then((callback) => {
+            if (callback?.error) {
+              console.log('Invalid credentials!', callback.error);
+            }
+          })
+          .catch(() => console.log('Something went wrong!'));
+      } else {
+        handleSignIn(data);
+      }
     } catch (e) {
       // handle your error
       console.log(e);
@@ -35,15 +67,18 @@ export const AuthModalComponent = () => {
   };
   return (
     <>
-      <button
-        onClick={onClickTwo}
-        className='rounded-md bg-red-700 px-4 py-2 text-[14px] text-white outline-none hover:bg-red-700/90'
-      >
-        Sign in
-      </button>
+      {user ? (
+        <div className='h-10 w-10 rounded-full bg-red-700 text-white'>A</div>
+      ) : (
+        <button
+          onClick={onClickTwo}
+          className='rounded-md bg-red-700 px-4 py-2 text-[14px] text-white outline-none hover:bg-red-700/90'
+        >
+          Sign in
+        </button>
+      )}
       {isSignin ? (
         <form>
-          {' '}
           <Modal
             color='yellow'
             icon={

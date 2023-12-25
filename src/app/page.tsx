@@ -1,8 +1,11 @@
 import { AuthModalComponent } from '@/components/auth-modal';
 import { ImageSlider } from '@/components/image-slider';
 import MovieCategory from '@/components/movie-category';
+import { getCurrentUser } from '@/lib/session';
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  console.log('user', user);
   return (
     <main className='flex min-h-screen flex-col bg-neutral-900 px-[10%]'>
       <div>
@@ -11,10 +14,7 @@ export default function Home() {
             M<span className='hidden text-3xl md:inline'>ooviews</span>
           </h1>
           <div>
-            {/* <button className='rounded-md bg-red-700 px-4 py-2 text-[14px] font-semibold text-white'>
-              Sign in
-            </button> */}
-            <AuthModalComponent />
+            {user ? <div> A </div> : <AuthModalComponent user={user} />}
           </div>
         </nav>
 
