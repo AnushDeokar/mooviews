@@ -1,7 +1,9 @@
 import * as trpc from '@trpc/server';
-import { procedure, router } from './trpc';
+import { publicProcedure, router } from './trpc';
+import { authRouter } from './routers/auth';
 
 export const appRouter = router({
-  greeting: procedure.query(() => 'hello tRPC v10!'),
+  auth: authRouter,
+  greeting: publicProcedure.query(() => 'hello tRPC v10!'),
 });
 export type AppRouter = typeof appRouter;

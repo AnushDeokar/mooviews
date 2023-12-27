@@ -12,12 +12,7 @@ import { trpc } from '@/utils/trpc';
 export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
   const [showModalX, setShowModalX] = useState(false);
   const [isSignin, setIsSignIn] = useState<boolean>(true);
-  const { data, isLoading, isFetching } = trpc.greeting.useQuery();
-
-  // if (isLoading || isFetching) {
-  //   return <p>Loading...</p>;
-  // }
-  console.log(data);
+  const { mutateAsync } = trpc.auth.register.useMutation()
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -50,22 +45,9 @@ export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
     try {
       // await fetch()
       if (!isSignin) {
-        await axios
-          .post('/api/register', data)
-          .then(() =>
-            signIn('credentials', {
-              ...data,
-              redirect: false,
-            })
-          )
-          .then((callback) => {
-            if (callback?.error) {
-              console.log('Invalid credentials!', callback.error);
-            }
-          })
-          .catch(() => console.log('Something went wrong!'));
+        const res = await mutateAsync(data)
       } else {
-        handleSignIn(data);
+        // handleSignIn(data);
       }
     } catch (e) {
       // handle your error
