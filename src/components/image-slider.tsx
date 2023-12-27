@@ -70,8 +70,9 @@ export function ImageSlider({
       >
         {images.map((image, index) => {
           return (
-            <div
+            <motion.div
               // className='mt-20'
+
               style={{
                 width: width,
                 height: height,
@@ -82,7 +83,7 @@ export function ImageSlider({
                 backgroundPosition: 'center', // Optional: Center the image
               }}
               key={index}
-            />
+            ></motion.div>
           );
         })}
       </Page>

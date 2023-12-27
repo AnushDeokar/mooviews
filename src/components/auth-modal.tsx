@@ -7,10 +7,17 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { User } from '@prisma/client';
+import { trpc } from '@/utils/trpc';
 
 export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
   const [showModalX, setShowModalX] = useState(false);
   const [isSignin, setIsSignIn] = useState<boolean>(true);
+  const { data, isLoading, isFetching } = trpc.greeting.useQuery();
+
+  // if (isLoading || isFetching) {
+  //   return <p>Loading...</p>;
+  // }
+  console.log(data);
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {

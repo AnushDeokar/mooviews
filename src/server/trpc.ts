@@ -1,3 +1,5 @@
 import { initTRPC } from '@trpc/server';
-const trpc = initTRPC.create();
+import superjson from 'superjson';
+
+const trpc = initTRPC.create({ transformer: superjson });
 export const { router, procedure } = trpc;

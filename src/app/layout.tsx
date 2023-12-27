@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
 import './globals.css';
+import { TrpcProvider } from '@/utils/trpc-provider';
 
 const inter = DM_Sans({ subsets: ['latin'] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <TrpcProvider>{children}</TrpcProvider>
+      </body>
     </html>
   );
 }
