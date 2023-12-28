@@ -1,11 +1,13 @@
 import { AuthModalComponent } from '@/components/auth-modal';
 import { ImageSlider } from '@/components/image-slider';
 import MovieCategory from '@/components/movie-category';
+import ProfileButton from '@/components/profile-button';
 import { getCurrentUser } from '@/lib/session';
+import { signOut } from 'next-auth/react';
 
 export default async function Home() {
   const user = await getCurrentUser();
-  console.log('user', user);
+
   return (
     <main className='flex min-h-screen flex-col bg-neutral-900 px-[10%]'>
       <div>
@@ -13,9 +15,8 @@ export default async function Home() {
           <h1 className='inline text-5xl font-semibold text-red-700'>
             M<span className='hidden text-3xl md:inline'>ooviews</span>
           </h1>
-          <div>
-            {user ? <div> A </div> : <AuthModalComponent user={user} />}
-          </div>
+
+          <ProfileButton user={user} />
         </nav>
 
         <div className='md:grid-flow-col-reverse my-10 grid  w-full grid-cols-1 font-semibold md:grid-cols-[.5fr_.6fr]'>

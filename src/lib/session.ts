@@ -1,4 +1,4 @@
-import { authoptions } from '@/server/auth';
+import { authoptions } from '@/server/next-auth';
 import { getServerSession } from 'next-auth/next';
 
 export async function getSession() {

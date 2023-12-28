@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import { TrpcProvider } from '@/utils/trpc-provider';
+import AuthContext from '@/utils/auth-provider';
 
 const inter = DM_Sans({ subsets: ['latin'] });
 
@@ -16,10 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <TrpcProvider>{children}</TrpcProvider>
-      </body>
-    </html>
+    <AuthContext>
+      <html lang='en'>
+        <body className={inter.className}>
+          <TrpcProvider>{children}</TrpcProvider>
+        </body>
+      </html>
+    </AuthContext>
   );
 }

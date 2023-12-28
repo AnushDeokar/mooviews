@@ -4,15 +4,20 @@ import { Modal } from 'keep-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { User } from '@prisma/client';
 import { trpc } from '@/utils/trpc';
+import { useRouter } from 'next/navigation';
 
-export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
+export const AuthModalComponent = ({
+  user,
+}: {
+  user: User | undefined | null;
+}) => {
+  const router = useRouter();
   const [showModalX, setShowModalX] = useState(false);
   const [isSignin, setIsSignIn] = useState<boolean>(true);
-  const { mutateAsync } = trpc.auth.register.useMutation()
+  const { mutateAsync } = trpc.auth.register.useMutation();
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -41,14 +46,16 @@ export const AuthModalComponent = ({ user }: { user: User | undefined }) => {
       .catch(() => console.log('Something went wrong!'));
   };
   const onSubmit = async (data: any) => {
-    console.log('called');
     try {
       // await fetch()
       if (!isSignin) {
-        const res = await mutateAsync(data)
+        const res = await mutateAsync(data);
+        console.log('res', res);
+        handleSignIn(data);
       } else {
-        // handleSignIn(data);
+        handleSignIn(data);
       }
+      router.push('/');
     } catch (e) {
       // handle your error
       console.log(e);
