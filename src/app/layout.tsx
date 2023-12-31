@@ -3,6 +3,7 @@ import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import { TrpcProvider } from '@/utils/trpc-provider';
 import AuthContext from '@/utils/auth-provider';
+import ToastContext from '@/utils/toast-provider';
 
 const inter = DM_Sans({ subsets: ['latin'] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <AuthContext>
       <html lang='en'>
         <body className={inter.className}>
+          <ToastContext />
           <TrpcProvider>{children}</TrpcProvider>
         </body>
       </html>
