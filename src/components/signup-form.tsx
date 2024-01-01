@@ -46,7 +46,7 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   const { mutateAsync } = trpc.auth.register.useMutation();
 
   const { register, handleSubmit, formState } = useForm<formInputs>({
-    resolver: zodResolver(authSchema),
+    // resolver: zodResolver(authSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -68,9 +68,9 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
         toast.error(formState.errors.email?.message);
         return;
       }
-      //   const res = await mutateAsync(data);
-      //   console.log('res', res);
-      //   handleSignIn(data);
+      const res = await mutateAsync(data);
+      console.log('res', res);
+      handleSignIn(data);
       router.push('/');
     } catch (e) {
       // handle your error
@@ -85,16 +85,17 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
     })
       .then((callback) => {
         if (callback?.error) {
-          console.log('Invalid Credentials!');
+          console.log('Invalid Credentials!', console.log(callback.error));
         } else if (callback?.ok) {
           toast.success('Successfully Logged In!');
+          location.reload();
         }
       })
       .catch(() => console.log('Something went wrong!'));
   };
 
   return (
-    <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
+    <form>
       <Modal
         color='yellow'
         icon={<h1 className='inline text-5xl font-semibold text-red-700'>M</h1>}
@@ -134,16 +135,17 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
           <Button onClick={onClickTwo} className='text-black'>
             Cancel
           </Button>
-          <input
+          <Button
             className='bg-red-700 text-white hover:bg-red-700/90'
             type='submit'
             // onClick={()=>console.log("clicked")}
-            onClick={() => {
-              console.log('clicked');
-              onSubmit(formState.defaultValues);
-            }}
-          />
-          Sign up
+            // onClick={() => {
+            //   handleSubmit(onSubmit);
+            // }}
+            onClick={(...args) => void handleSubmit(onSubmit)(...args)}
+          >
+            Sign up
+          </Button>
         </Modal.Footer>
         <p className='mt-4 flex justify-center text-sm text-black'>
           Already have an account? &nbsp;

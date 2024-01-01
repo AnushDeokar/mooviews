@@ -7,7 +7,7 @@ async function MovieCategory() {
     <div>
       <h1 className='text-xl font-semibold md:text-2xl'>Recommended Movies</h1>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5'>
-        {movies.map((movie, ind) => (
+        {movies?.map((movie: any, ind: number) => (
           <div key={ind}>
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}

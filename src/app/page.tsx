@@ -1,9 +1,7 @@
-import { AuthModalComponent } from '@/components/auth-modal';
 import { ImageSlider } from '@/components/image-slider';
+import MainNavbar from '@/components/main-navbar';
 import MovieCategory from '@/components/movie-category';
-import ProfileButton from '@/components/profile-button';
 import { getCurrentUser } from '@/lib/session';
-import { signOut } from 'next-auth/react';
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -11,13 +9,7 @@ export default async function Home() {
   return (
     <main className='flex min-h-screen flex-col bg-neutral-900 px-[10%]'>
       <div>
-        <nav className='flex items-center justify-between py-10'>
-          <h1 className='inline text-5xl font-semibold text-red-700'>
-            M<span className='hidden text-3xl md:inline'>ooviews</span>
-          </h1>
-
-          <ProfileButton user={user} />
-        </nav>
+        <MainNavbar user={user} />
 
         <div className='md:grid-flow-col-reverse my-10 grid  w-full grid-cols-1 font-semibold md:grid-cols-[.5fr_.6fr]'>
           <div className='text-3xl md:text-5xl md:leading-10 lg:text-6xl'>
@@ -26,7 +18,6 @@ export default async function Home() {
           </div>
           <div className='items relative hidden items-center justify-center pt-24 md:mt-0 md:flex md:pt-0'>
             <ImageSlider height={280} width={400} />
-            {/* <ExampleSecond/> */}
           </div>
 
           <div className='items relative flex items-center justify-center pt-24 md:mt-0 md:hidden md:pt-0'>

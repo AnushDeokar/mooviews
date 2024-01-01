@@ -67,6 +67,7 @@ function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
           console.log('Invalid Credentials!');
         } else if (callback?.ok) {
           toast.success('Successfully Logged In!');
+          location.reload();
         }
       })
       .catch(() => console.log('Something went wrong!'));
@@ -106,7 +107,7 @@ function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
           <Button
             className='bg-red-700 text-white hover:bg-red-700/90'
             type='submit'
-            // onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit)}
           >
             Sign in
           </Button>
