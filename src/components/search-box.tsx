@@ -42,7 +42,7 @@ export function DebouncedInput<TData extends object>({
   className,
   ...props
 }: DebouncedInputProps<TData>) {
-  const { query, setQuery, setData } = useSearchStore();
+  const { query, setQuery, setMovies } = useSearchStore();
   const initialValue = query;
   const [isOpen, setIsOpen] = React.useState(false);
   const [value, setValue] = React.useState(initialValue);
@@ -73,7 +73,7 @@ export function DebouncedInput<TData extends object>({
       if (e.key === 'Escape') {
         closeInput();
         setQuery('');
-        setData([]);
+        setMovies([]);
       }
       // open search input on pressing ctrl + k or cmd + k
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -85,7 +85,7 @@ export function DebouncedInput<TData extends object>({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [closeInput, setData, setQuery]);
+  }, [closeInput, setMovies, setQuery]);
 
   return (
     <div className={cn('relative', containerClassName)}>
@@ -97,7 +97,7 @@ export function DebouncedInput<TData extends object>({
         className={cn(
           'transition-al h-auto rounded-none py-1.5 pl-8 text-sm dark:placeholder:text-slate-300 dark:focus:ring-offset-0',
           isOpen
-            ? 'xxs:w-28 xs:w-40 w-24 border md:w-40 dark:border-slate-500'
+            ? 'xxs:w-28 xs:w-48 w-24 border md:w-40 dark:border-slate-500'
             : 'w-0 border-none',
           className
         )}

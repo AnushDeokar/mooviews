@@ -1,3 +1,4 @@
+import { Show } from '@/types';
 import axios from 'axios';
 
 export async function getMovies(category: string) {
