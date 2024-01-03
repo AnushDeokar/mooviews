@@ -21,7 +21,7 @@ export const AuthModalComponent = ({
 
   return (
     <>
-      {user && (
+      {!user && (
         <button
           onClick={onClickTwo}
           className='rounded-md bg-red-700 px-4 py-2 text-[14px] text-white outline-none hover:bg-red-700/90'
