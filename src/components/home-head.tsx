@@ -4,6 +4,7 @@ import ImageCarousel from './image-carousel';
 import { GithubLogoIcon } from './ui/icons';
 import { Show } from '@/types';
 import { useSearchStore } from '@/states/search-movies';
+import Link from 'next/link';
 
 function HomeMainSection({ movies }: { movies: Show }) {
   const { query } = useSearchStore();
@@ -19,10 +20,13 @@ function HomeMainSection({ movies }: { movies: Show }) {
           <span className='text-red-600'>NextJs</span>
         </div>
         <p className='my-4 flex w-full justify-center font-light md:justify-start'>
-          <button className='flex items-center gap-2 rounded-md bg-[#27272a] px-4 py-2 hover:opacity-70'>
+          <Link
+            className='flex items-center gap-2 rounded-md bg-[#27272a] px-4 py-2 hover:opacity-70'
+            href='https://github.com/AnushDeokar/mooviews'
+          >
             <GithubLogoIcon width={15} height={15} />
             Give a star on github
-          </button>
+          </Link>
         </p>
       </div>
       <div className='items relative flex items-center justify-center md:pt-0'>

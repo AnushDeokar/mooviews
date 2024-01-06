@@ -22,7 +22,6 @@ export default function ImageCarousel({ movies }: { movies: any }) {
     };
   }, [index]);
 
-  // console.log(divRef.current.offsetWidth)
   const SIZE =
     divRef && divRef.current ? divRef?.current?.offsetWidth / 2 : 320;
 

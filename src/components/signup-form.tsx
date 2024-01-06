@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Modal } from 'keep-react';
+import { Modal, Spinner } from 'keep-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
@@ -44,6 +44,7 @@ import React from 'react';
 function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   const router = useRouter();
   const { mutateAsync } = trpc.auth.register.useMutation();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { register, handleSubmit, formState } = useForm<formInputs>({
     // resolver: zodResolver(authSchema),
@@ -55,7 +56,7 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   });
 
   const onSubmit = async (data: any) => {
-    console.log('called', formState.errors, data);
+    setIsLoading(true);
     try {
       // await fetch()
       if (formState.errors.name?.message) {
@@ -69,13 +70,13 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
         return;
       }
       const res = await mutateAsync(data);
-      console.log('res', res);
       handleSignIn(data);
       router.push('/');
     } catch (e) {
       // handle your error
       console.log(e);
     }
+    setIsLoading(false);
   };
 
   const handleSignIn = async (data: any) => {
@@ -85,7 +86,9 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
     })
       .then((callback) => {
         if (callback?.error) {
+          toast.error('Error Signing up! Please try again');
           console.log('Invalid Credentials!', console.log(callback.error));
+          setIsLoading(false);
         } else if (callback?.ok) {
           toast.success('Successfully Logged In!');
           location.reload();
@@ -136,14 +139,14 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
             Cancel
           </Button>
           <Button
-            className='bg-red-700 text-white hover:bg-red-700/90'
+            className={`${
+              isLoading ? 'bg-red-700' : 'bg-red-700/80'
+            } "text-white gap-4" flex items-center justify-center hover:bg-red-700/90`}
             type='submit'
-            // onClick={()=>console.log("clicked")}
-            // onClick={() => {
-            //   handleSubmit(onSubmit);
-            // }}
             onClick={(...args) => void handleSubmit(onSubmit)(...args)}
+            disabled={isLoading}
           >
+            {isLoading && <Spinner color='white' size='sm' className='mr-2' />}
             Sign up
           </Button>
         </Modal.Footer>

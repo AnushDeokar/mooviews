@@ -4,6 +4,7 @@ import { Show } from '@/types';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Spinner } from 'keep-react';
 
 // TODO: Correct this component
 
@@ -15,23 +16,14 @@ const variants = {
 };
 
 function SearchList() {
-  const { movies, query } = useSearchStore();
-  console.log(query);
-  const [mounted, setMounted] = React.useState(false);
+  const { movies, query, moviesLoading } = useSearchStore();
 
-  React.useEffect(() => {
-    const mountByTime = setTimeout(() => {
-      setMounted(true);
-    }, 1000);
-
-    return () => {
-      clearTimeout(mountByTime);
-      setMounted(false);
-    };
-  }, [query, movies]);
-
-  if (!mounted) {
-    return null;
+  if (moviesLoading) {
+    return (
+      <div className='mt-40 flex w-full justify-center'>
+        <Spinner color='failure' size='lg' />
+      </div>
+    );
   }
 
   if (movies.length > 0) {

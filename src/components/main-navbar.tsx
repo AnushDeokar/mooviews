@@ -8,7 +8,7 @@ import { useSearchStore } from '@/states/search-movies';
 import { searchShows } from '@/actions/searchShows';
 
 function MainNavbar({ user }: { user: User | null | undefined }) {
-  const { setQuery, setMovies } = useSearchStore();
+  const { setQuery, setMovies, setMoviesLoading } = useSearchStore();
   return (
     <nav className='flex items-center justify-between py-10'>
       <h1 className='inline text-5xl font-semibold text-red-700'>
@@ -17,10 +17,10 @@ function MainNavbar({ user }: { user: User | null | undefined }) {
       <div className='flex gap-2'>
         <DebouncedInput
           onChange={async (value) => {
-            console.log(value);
+            setMoviesLoading(true);
             setQuery(value);
             const res = await searchShows(value as string);
-            console.log('res', res);
+            setMoviesLoading(false);
             setMovies(res?.results);
           }}
           containerClassName='flex'

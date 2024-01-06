@@ -1,12 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { Modal } from 'keep-react';
+import { Modal, Spinner } from 'keep-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
-import { User } from '@prisma/client';
-import { trpc } from '@/utils/trpc';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,6 +35,7 @@ interface ISignInForm {
 }
 function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { register, handleSubmit, formState } = useForm<formInputs>({
     // resolver: zodResolver(authSchema),
     defaultValues: {
@@ -46,7 +45,6 @@ function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   });
 
   const onSubmit = async (data: any) => {
-    console.log('called', formState.errors);
     try {
       // await fetch()
       handleSignIn(data);
@@ -58,19 +56,23 @@ function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
   };
 
   const handleSignIn = async (data: any) => {
+    setIsLoading(true);
     await signIn('credentials', {
       ...data,
       redirect: false,
     })
       .then((callback) => {
         if (callback?.error) {
-          console.log('Invalid Credentials!');
+          console.log('Invalid Credentials!', callback?.error);
+          toast.error('Invalid Credentials!');
         } else if (callback?.ok) {
           toast.success('Successfully Logged In!');
+          setIsLoading(false);
           location.reload();
         }
       })
       .catch(() => console.log('Something went wrong!'));
+    setIsLoading(false);
   };
 
   return (
@@ -105,10 +107,14 @@ function SignInForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
             Cancel
           </Button>
           <Button
-            className='bg-red-700 text-white hover:bg-red-700/90'
+            className={`${
+              isLoading ? 'bg-red-700' : 'bg-red-700/80'
+            } "text-white gap-4" flex items-center justify-center hover:bg-red-700/90`}
             type='submit'
             onClick={handleSubmit(onSubmit)}
+            disabled={isLoading}
           >
+            {isLoading && <Spinner color='white' size='sm' className='mr-2' />}
             Sign in
           </Button>
         </Modal.Footer>
