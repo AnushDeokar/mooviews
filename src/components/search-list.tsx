@@ -5,8 +5,7 @@ import Image from 'next/image';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Spinner } from 'keep-react';
-
-// TODO: Correct this component
+import { useRouter } from 'next/navigation';
 
 const stagger = 0.25;
 
@@ -17,6 +16,7 @@ const variants = {
 
 function SearchList() {
   const { movies, query, moviesLoading } = useSearchStore();
+  const router = useRouter();
 
   if (moviesLoading) {
     return (
@@ -47,7 +47,7 @@ function SearchList() {
               viewport={{ amount: 0 }}
               className='relative w-full max-w-sm rounded'
             >
-              <div>
+              <div onClick={()=> router.push(`/shows/${movie.media_type}-${movie.id}`)}>
                 <Image
                   src={`https://image.tmdb.org/t/p/original/${
                     movie.poster_path ?? movie.backdrop_path

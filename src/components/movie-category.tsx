@@ -2,13 +2,13 @@
 import { useSearchStore } from '@/states/search-movies';
 import { Show } from '@/types';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-// TODO: Correct this component
 function MovieCategory({ homePageMovies }: { homePageMovies: Show[] }) {
-  const { movies, query } = useSearchStore();
-
-  useEffect(() => {}, [movies]);
+  // homePageMovies = homePageMovies.reverse();
+  const { query } = useSearchStore();
+  const router = useRouter();
 
   if (query.length > 0) {
     return null;
@@ -20,9 +20,9 @@ function MovieCategory({ homePageMovies }: { homePageMovies: Show[] }) {
         Popular right now
       </h1>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5'>
-        {(movies.length > 0 ? movies : homePageMovies)?.map(
+        {(homePageMovies)?.map(
           (movie: any, ind: number) => (
-            <div key={ind}>
+            <div key={ind} onClick={()=> router.push(`/shows/${movie.media_type}-${movie.id}`)}>
               <Image
                 src={`https://image.tmdb.org/t/p/original/${
                   movie.poster_path ?? movie.backdrop_path
