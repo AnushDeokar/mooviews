@@ -9,6 +9,6 @@ export async function getShowById(mediaType: string, id: string) {
 
     return res?.data;
   } catch (err) {
-    return null
+    return null;
   }
 }

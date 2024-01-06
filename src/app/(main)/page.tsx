@@ -8,7 +8,7 @@ export default async function Home() {
   const movies = await getMovies('movie');
   return (
     <div>
-        <HomeMainSection movies={movies} />
+      <HomeMainSection movies={movies} />
       <div className='mt-12'>
         <MovieCategory homePageMovies={movies} />
         <SearchList />

@@ -20,21 +20,24 @@ function MovieCategory({ homePageMovies }: { homePageMovies: Show[] }) {
         Popular right now
       </h1>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5'>
-        {(homePageMovies)?.map(
-          (movie: any, ind: number) => (
-            <div key={ind} onClick={()=> router.push(`/shows/${movie.media_type}-${movie.id}`)}>
-              <Image
-                src={`https://image.tmdb.org/t/p/original/${
-                  movie.poster_path ?? movie.backdrop_path
-                }`}
-                className='w-full cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110'
-                width={500}
-                height={800}
-                alt=''
-              />
-            </div>
-          )
-        )}
+        {homePageMovies?.map((movie: any, ind: number) => (
+          <div
+            key={ind}
+            onClick={() =>
+              router.push(`/shows/${movie.media_type}-${movie.id}`)
+            }
+          >
+            <Image
+              src={`https://image.tmdb.org/t/p/original/${
+                movie.poster_path ?? movie.backdrop_path
+              }`}
+              className='w-full cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110'
+              width={500}
+              height={800}
+              alt=''
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

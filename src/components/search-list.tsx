@@ -47,7 +47,11 @@ function SearchList() {
               viewport={{ amount: 0 }}
               className='relative w-full max-w-sm rounded'
             >
-              <div onClick={()=> router.push(`/shows/${movie.media_type}-${movie.id}`)}>
+              <div
+                onClick={() =>
+                  router.push(`/shows/${movie.media_type}-${movie.id}`)
+                }
+              >
                 <Image
                   src={`https://image.tmdb.org/t/p/original/${
                     movie.poster_path ?? movie.backdrop_path
