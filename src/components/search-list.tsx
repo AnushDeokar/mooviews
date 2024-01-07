@@ -15,7 +15,7 @@ const variants = {
 };
 
 function SearchList() {
-  const { movies, query, moviesLoading } = useSearchStore();
+  const { movies, query, moviesLoading, setQuery } = useSearchStore();
   const router = useRouter();
 
   if (moviesLoading) {
@@ -48,9 +48,9 @@ function SearchList() {
               className='relative w-full max-w-sm rounded'
             >
               <div
-                onClick={() =>
-                  router.push(`/shows/${movie.media_type}-${movie.id}`)
-                }
+                onClick={() => {
+                  router.push(`/shows/${movie.media_type}-${movie.id}`);
+                }}
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/original/${
