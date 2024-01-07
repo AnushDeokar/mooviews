@@ -7,11 +7,12 @@ export const ProfileMenu = () => {
   return (
     <div>
       <Dropdown
-        label='AD'
+        label='A'
         size='md'
         dismissOnClick={true}
-        className='flex h-10 items-center justify-center rounded-md  bg-transparent text-lg font-semibold text-white hover:bg-red-700/90'
+        className='flex h-10 items-center justify-center rounded-md bg-pink-700 px-0 text-lg font-semibold text-white hover:bg-pink-700'
         style={{ fontSize: '80px' }}
+        arrowIcon={false}
       >
         <Dropdown.Item icon={<SquaresFour size={20} color='#5E718D' />}>
           Dashboard

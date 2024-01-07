@@ -7,6 +7,8 @@ import { MoveRightIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import ShowDescription from '@/components/show-description';
 import { getWatchListStatus } from '@/actions/getWatchListStatus';
+import { getSimilarShows } from '@/actions/getSimilarShows';
+import MovieCategory from '@/components/movie-category';
 
 const VideoPlayer = dynamic(() => import('@/components/video-player'), {
   ssr: false,
@@ -38,13 +40,14 @@ async function ShowPage({ params }: { params: Params }) {
 
   const { title, videos, tagline, overview, backdrop_path, id } = showDetails;
   const watchListStatus = await getWatchListStatus(typeId[0], id);
+  const similarShows = await getSimilarShows(typeId[0], id);
 
   const trailers = videos?.results.filter(
     (video: any) => video.type === 'Trailer'
   );
   return (
     <div>
-      <h1 className='text-xl font-semibold md:text-3xl'>{title}</h1>
+      <h1 className='text-xl font-semibold md:text-3xl lg:hidden'>{title}</h1>
       <div className='grid grid-cols-1 gap-x-8 gap-y-4 pt-4 lg:grid-cols-2'>
         <VideoPlayer url={trailers[0]?.key} backdrop={backdrop_path} />
         <div>
@@ -53,6 +56,14 @@ async function ShowPage({ params }: { params: Params }) {
             type={typeId[0]}
             watchListStatus={watchListStatus}
           />
+        </div>
+      </div>
+      <div className='mt-12'>
+        <h1 className='mb-4 text-xl font-semibold md:text-2xl'>
+          Simliar Movies
+        </h1>
+        <div className='mt-4'>
+          <MovieCategory homePageMovies={similarShows || []} />
         </div>
       </div>
     </div>

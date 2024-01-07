@@ -16,15 +16,12 @@ function MovieCategory({ homePageMovies }: { homePageMovies: Show[] }) {
 
   return (
     <div>
-      <h1 className='mb-4 text-xl font-semibold md:text-2xl'>
-        Popular right now
-      </h1>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5'>
         {homePageMovies?.map((movie: any, ind: number) => (
           <div
             key={ind}
             onClick={() =>
-              router.push(`/shows/${movie.media_type}-${movie.id}`)
+              router.push(`/shows/${movie.media_type ?? 'movie'}-${movie.id}`)
             }
           >
             <Image
