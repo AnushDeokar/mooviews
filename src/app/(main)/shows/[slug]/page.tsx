@@ -5,6 +5,8 @@ import { Button } from 'keep-react';
 import Link from 'next/link';
 import { MoveRightIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import ShowDescription from '@/components/show-description';
+import { getWatchListStatus } from '@/actions/getWatchListStatus';
 
 const VideoPlayer = dynamic(() => import('@/components/video-player'), {
   ssr: false,
@@ -34,20 +36,23 @@ async function ShowPage({ params }: { params: Params }) {
     );
   }
 
-  const { title, videos, tagline, overview, backdrop_path } = showDetails;
+  const { title, videos, tagline, overview, backdrop_path, id } = showDetails;
+  const watchListStatus = await getWatchListStatus(typeId[0], id);
+
   const trailers = videos?.results.filter(
     (video: any) => video.type === 'Trailer'
   );
   return (
     <div>
       <h1 className='text-xl font-semibold md:text-3xl'>{title}</h1>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 pt-4 text-center lg:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-x-8 gap-y-4 pt-4 lg:grid-cols-2'>
         <VideoPlayer url={trailers[0]?.key} backdrop={backdrop_path} />
         <div>
-          <div className='flex flex-col md:text-left'>
-            <h3 className='text-xl font-semibold text-gray-100'>Plot</h3>
-            <p className='text-gray-400'>{overview}</p>
-          </div>
+          <ShowDescription
+            showDetails={showDetails}
+            type={typeId[0]}
+            watchListStatus={watchListStatus}
+          />
         </div>
       </div>
     </div>
