@@ -41,13 +41,15 @@ async function ShowPage({ params }: { params: Params }) {
   const { title, videos, tagline, overview, backdrop_path, id } = showDetails;
   const watchListStatus = await getWatchListStatus(typeId[0], id);
   const similarShows = await getSimilarShows(typeId[0], id);
-
+  console.log(title, showDetails.name);
   const trailers = videos?.results.filter(
     (video: any) => video.type === 'Trailer'
   );
   return (
     <div>
-      <h1 className='text-xl font-semibold md:text-3xl lg:hidden'>{title}</h1>
+      <h1 className='text-xl font-semibold md:text-3xl lg:hidden'>
+        {title || showDetails.name}
+      </h1>
       <div className='grid grid-cols-1 gap-x-8 gap-y-4 pt-4 lg:grid-cols-2'>
         <VideoPlayer url={trailers[0]?.key} backdrop={backdrop_path} />
         <div>

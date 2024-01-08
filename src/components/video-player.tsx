@@ -7,7 +7,7 @@ function VideoPlayer({ url, backdrop }: { url: string; backdrop: string }) {
   console.log(url);
 
   return (
-    <div className='m-auto w-full lg:m-0'>
+    <div className='m-auto flex w-full flex-col justify-center lg:m-0'>
       {url ? (
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${url}`}

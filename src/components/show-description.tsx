@@ -96,7 +96,6 @@ function ShowDescription({
           className='flex justify-center gap-2 bg-white text-black hover:bg-white/90'
           size='sm'
           onClick={() => setShowReadReviewsModal(true)}
-          disabled={isLoading}
         >
           <BookText size={20} />
           Read reviews
@@ -109,7 +108,7 @@ function ShowDescription({
         type={type}
       />
       <ReadReviewsModal
-        showAddReviewModal={showAddReviewModal}
+        showAddReviewModal={showReadReviewsModal}
         showDetails={showDetails}
         onClose={() => setShowReadReviewsModal(false)}
         type={type}

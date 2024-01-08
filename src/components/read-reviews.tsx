@@ -1,10 +1,19 @@
-import { Modal, Spinner } from 'keep-react';
-import React, { useState } from 'react';
+import { Dropdown, Modal, Spinner } from 'keep-react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/text-area';
 import { Star } from 'lucide-react';
 import { trpc } from '@/utils/trpc';
 import toast from 'react-hot-toast';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from './ui/dropdown';
 
 function ReadReviewsModal({
   showAddReviewModal,
@@ -17,7 +26,6 @@ function ReadReviewsModal({
   onClose: () => void;
   type: string;
 }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [stars, setStars] = useState<boolean[]>([
     false,
     false,
@@ -28,6 +36,10 @@ function ReadReviewsModal({
   const [text, setText] = useState<string>('');
   const { mutateAsync } = trpc.review.addReview.useMutation();
 
+  const { data, isLoading } = trpc.review.fetchReviews.useQuery({
+    movieId: showDetails.id,
+    type,
+  });
   const starsChange = (ind: number) => {
     const updatedStars = [];
     for (let i = 0; i < 5; i++) {
@@ -40,27 +52,7 @@ function ReadReviewsModal({
     setStars(updatedStars);
   };
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const starsCount = stars.filter(Boolean).length;
-      if (starsCount == 0 || text === '') {
-        toast.error('Please add stars and text while reviewing!');
-        return;
-      }
-      const res = await mutateAsync({
-        stars: starsCount,
-        type: type,
-        review: text,
-        movieId: showDetails.id,
-      });
-      console.log(res);
-    } catch (err) {
-      toast.error('Please log in to add a review');
-    }
-    setIsLoading(false);
-    onClose();
-  };
+  const handleSubmit = async () => {};
 
   return (
     <Modal
@@ -71,43 +63,40 @@ function ReadReviewsModal({
       onClose={onClose}
     >
       <Modal.Header>
-        Add your reviews for {showDetails.original_title}
+        Reviews for {showDetails.original_title || showDetails.name}
       </Modal.Header>
-      <Modal.Body>
-        <div className='space-y-6 text-black'>
-          <div className='flex cursor-pointer gap-2'>
-            {stars.map((ind, id) => (
-              <div key={id} onClick={() => starsChange(id)}>
-                <Star color='#ef4444' fill={stars[id] ? '#ef4444' : 'white'} />
-              </div>
-            ))}
-          </div>
-          <Textarea
-            id='review'
-            placeholder='Write review'
-            color='black'
-            value={text}
-            className='font-inherit font-md text-black'
-            onChange={(e: any) => setText(e.target.value)}
-          />
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={onClose} className='text-black'>
-          Cancel
-        </Button>
-        <Button
-          className={`${
-            isLoading ? 'bg-red-700' : 'bg-red-700/80'
-          } "text-white gap-4" flex items-center justify-center hover:bg-red-700/90`}
-          type='submit'
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading && <Spinner color='white' size='sm' className='mr-2' />}
-          Post
-        </Button>
-      </Modal.Footer>
+      {isLoading ? (
+        <Spinner className='m-20' color='failure' />
+      ) : (
+        <Modal.Body style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          {data?.length === 0 ? (
+            <div className='m-20 flex justify-center font-bold text-gray-500 '>
+              No Reviews Found
+            </div>
+          ) : (
+            <div className='flex flex-col gap-4 text-black'>
+              {data?.map((review, id) => (
+                <div key={id} className='flex flex-col'>
+                  <div className='flex gap-2'>
+                    <h3 className='font-bold text-black'>{review.user.name}</h3>
+                    <div className='flex items-center'>
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star
+                          key={i}
+                          color='#ef4444'
+                          size={13}
+                          fill={review.stars >= i ? '#ef4444' : 'none'}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className='text-sm text-gray-500'>{review.review}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </Modal.Body>
+      )}
     </Modal>
   );
 }

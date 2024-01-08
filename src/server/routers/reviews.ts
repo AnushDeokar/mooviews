@@ -29,4 +29,29 @@ export const reviewRouter = router({
       });
       return createdReview;
     }),
+
+  fetchReviews: publicProcedure
+    .input(
+      z.object({
+        type: z.string(),
+        movieId: z.number(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const showReviews = prisma.review.findMany({
+        where: {
+          type: input.type,
+          movieId: input.movieId,
+        },
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      return showReviews;
+    }),
 });
