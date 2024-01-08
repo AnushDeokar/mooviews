@@ -6,14 +6,15 @@ import ProfileButton from '@/components/profile-button';
 import type { User } from 'next-auth';
 import { useSearchStore } from '@/states/search-movies';
 import { searchShows } from '@/actions/searchShows';
+import Link from 'next/link';
 
 function MainNavbar({ user }: { user: User | null | undefined }) {
   const { setQuery, setMovies, setMoviesLoading } = useSearchStore();
   return (
     <nav className='flex items-center justify-between py-10'>
-      <h1 className='inline text-5xl font-semibold text-red-700'>
+      <Link className='inline text-5xl font-semibold text-red-700' href='/'>
         M<span className='hidden text-3xl md:inline'>ooviews</span>
-      </h1>
+      </Link>
       <div className='flex gap-2'>
         <DebouncedInput
           onChange={async (value) => {

@@ -68,7 +68,7 @@ function ShowDescription({
           ))}
         </p>
         <Button
-          className='mt-2 flex w-fit items-center gap-2 border-0 bg-transparent p-0'
+          className='flex w-fit items-center gap-2 border-0 bg-transparent p-0'
           onClick={handleWatchListChange}
         >
           {isLoading ? (

@@ -1,19 +1,20 @@
 'use client';
+import { Volume, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactPlayer from 'react-player/lazy';
+import { Button } from './ui/button';
 
 function VideoPlayer({ url, backdrop }: { url: string; backdrop: string }) {
-  console.log(url);
-
+  const [isMuted, setIsMuted] = useState<boolean>(true);
   return (
-    <div className='m-auto flex w-full flex-col justify-center lg:m-0'>
+    <div className='relative m-auto flex w-full flex-col justify-center lg:m-0'>
       {url ? (
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${url}`}
           playing={false}
-          // style={{width: "100%", height:"auto"}}
           width='100%'
+          muted={isMuted}
         />
       ) : (
         <Image
@@ -23,6 +24,19 @@ function VideoPlayer({ url, backdrop }: { url: string; backdrop: string }) {
           height={500}
           className='h-auto w-full'
         />
+      )}
+
+      {url && (
+        <Button
+          className=' absolute bottom-0 left-0 h-12 w-12 rounded-full bg-neutral-800 p-1.5 opacity-50 ring-1 ring-slate-400 hover:bg-neutral-800 hover:opacity-100 hover:ring-white focus:ring-offset-0 dark:bg-neutral-800 dark:hover:bg-neutral-800'
+          onClick={() => setIsMuted(!isMuted)}
+        >
+          {isMuted ? (
+            <VolumeX className='h-6 w-6' aria-hidden='true' />
+          ) : (
+            <Volume2 className='h-6 w-6' aria-hidden='true' />
+          )}
+        </Button>
       )}
     </div>
   );

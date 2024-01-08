@@ -41,7 +41,6 @@ async function ShowPage({ params }: { params: Params }) {
   const { title, videos, tagline, overview, backdrop_path, id } = showDetails;
   const watchListStatus = await getWatchListStatus(typeId[0], id);
   const similarShows = await getSimilarShows(typeId[0], id);
-  console.log(title, showDetails.name);
   const trailers = videos?.results.filter(
     (video: any) => video.type === 'Trailer'
   );

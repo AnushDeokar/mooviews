@@ -1,19 +1,7 @@
-import { Dropdown, Modal, Spinner } from 'keep-react';
+import { Modal, Spinner } from 'keep-react';
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/text-area';
 import { Star } from 'lucide-react';
 import { trpc } from '@/utils/trpc';
-import toast from 'react-hot-toast';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from './ui/dropdown';
 
 function ReadReviewsModal({
   showAddReviewModal,
@@ -26,33 +14,10 @@ function ReadReviewsModal({
   onClose: () => void;
   type: string;
 }) {
-  const [stars, setStars] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [text, setText] = useState<string>('');
-  const { mutateAsync } = trpc.review.addReview.useMutation();
-
   const { data, isLoading } = trpc.review.fetchReviews.useQuery({
     movieId: showDetails.id,
     type,
   });
-  const starsChange = (ind: number) => {
-    const updatedStars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i <= ind) {
-        updatedStars.push(true);
-      } else {
-        updatedStars.push(false);
-      }
-    }
-    setStars(updatedStars);
-  };
-
-  const handleSubmit = async () => {};
 
   return (
     <Modal
@@ -68,10 +33,16 @@ function ReadReviewsModal({
       {isLoading ? (
         <Spinner className='m-20' color='failure' />
       ) : (
-        <Modal.Body style={{ maxHeight: '200px', overflowY: 'auto' }}>
+        <Modal.Body
+          style={
+            data && data.length > 0
+              ? { maxHeight: '200px', overflowY: 'auto' }
+              : { maxHeight: '200px' }
+          }
+        >
           {data?.length === 0 ? (
             <div className='m-20 flex justify-center font-bold text-gray-500 '>
-              No Reviews Found
+              😓 No Reviews Found
             </div>
           ) : (
             <div className='flex flex-col gap-4 text-black'>
