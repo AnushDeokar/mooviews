@@ -65,7 +65,7 @@ async function ShowPage({ params }: { params: Params }) {
           Simliar Movies
         </h1>
         <div className='mt-4'>
-          <MovieCategory homePageMovies={similarShows || []} />
+          <MovieCategory homePageMovies={similarShows || []} isHome={false} />
         </div>
       </div>
     </div>

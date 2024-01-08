@@ -10,10 +10,11 @@ export default async function Home() {
     <div>
       <HomeMainSection movies={movies} />
       <div className='mt-12'>
-        <h1 className='mb-4 text-xl font-semibold md:text-2xl'>
-          Popular right now
-        </h1>
-        <MovieCategory homePageMovies={movies} />
+        <MovieCategory
+          homePageMovies={movies}
+          header='Popular Right Now'
+          isHome={true}
+        />
         <SearchList />
       </div>
     </div>

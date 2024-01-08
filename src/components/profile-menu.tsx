@@ -2,6 +2,7 @@
 import { Dropdown } from 'keep-react';
 import { CaretRight, Gear, Money, SignOut, SquaresFour } from 'phosphor-react';
 import { signOut } from 'next-auth/react';
+import { Heart } from 'lucide-react';
 
 export const ProfileMenu = () => {
   return (
@@ -26,8 +27,8 @@ export const ProfileMenu = () => {
             <CaretRight size={20} color='#5E718D' />
           </span>
         </Dropdown.Item>
-        <Dropdown.Item icon={<Money size={20} color='#5E718D' />}>
-          Earnings
+        <Dropdown.Item icon={<Heart size={20} color='#5E718D' />}>
+          My Watch List
           <span className='ml-auto'>
             <CaretRight size={20} color='#5E718D' />
           </span>

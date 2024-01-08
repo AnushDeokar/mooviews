@@ -13,17 +13,28 @@ const variants = {
   visible: { opacity: 1 },
 };
 
-function MovieCategory({ homePageMovies }: { homePageMovies: Show[] }) {
+function MovieCategory({
+  homePageMovies,
+  header,
+  isHome,
+}: {
+  homePageMovies: Show[];
+  header?: string;
+  isHome: boolean;
+}) {
   // homePageMovies = homePageMovies.reverse();
   const { query } = useSearchStore();
   const router = useRouter();
 
-  if (query.length > 0) {
+  if (query.length > 0 && isHome) {
     return null;
   }
 
   return (
     <div>
+      {header && (
+        <h1 className='mb-4 text-xl font-semibold md:text-2xl'>{header}</h1>
+      )}
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5'>
         {homePageMovies?.map((movie: any, ind: number) => (
           <motion.div
