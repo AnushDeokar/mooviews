@@ -10,7 +10,6 @@ function Loading() {
         <Skeleton className='h-[400px] w-full' />
         <div className='flex flex-col gap-8'>
           <Skeleton className='h-10 w-full' />
-
           <Skeleton className='w-full flex-1' />
         </div>
       </div>
