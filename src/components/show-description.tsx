@@ -49,7 +49,7 @@ function ShowDescription({
   };
 
   return (
-    <div className='flex h-full  flex-col justify-between md:text-left'>
+    <div className='flex  h-full flex-col justify-center md:text-left'>
       <div className='flex flex-col gap-2'>
         <h1 className='hidden text-xl font-semibold md:text-3xl lg:block'>
           {showDetails.title}

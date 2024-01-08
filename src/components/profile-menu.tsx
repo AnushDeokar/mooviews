@@ -16,18 +16,6 @@ export const ProfileMenu = () => {
         style={{ fontSize: '80px' }}
         arrowIcon={false}
       >
-        <Dropdown.Item icon={<SquaresFour size={20} color='#5E718D' />}>
-          Dashboard
-          <span className='ml-auto'>
-            <CaretRight size={20} color='#5E718D' />
-          </span>
-        </Dropdown.Item>
-        <Dropdown.Item icon={<Gear size={20} color='#5E718D' />}>
-          Settings
-          <span className='ml-auto'>
-            <CaretRight size={20} color='#5E718D' />
-          </span>
-        </Dropdown.Item>
         <Dropdown.Item icon={<Heart size={20} color='#5E718D' />}>
           <Link href='/watchlist' className='flex'>
             My Watch List

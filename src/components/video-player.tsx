@@ -1,5 +1,5 @@
 'use client';
-import { Volume, Volume2, VolumeX } from 'lucide-react';
+import { Info, Volume, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player/lazy';
@@ -7,6 +7,17 @@ import { Button } from './ui/button';
 
 function VideoPlayer({ url, backdrop }: { url: string; backdrop: string }) {
   const [isMuted, setIsMuted] = useState<boolean>(true);
+
+  if (!url && !backdrop) {
+    return (
+      <div className='h-100 flex w-full items-center justify-center bg-slate-500 text-white'>
+        <div className='flex justify-center'>
+          <Info /> <p className='m-auto ml-2'>Video Not Found</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='relative m-auto flex w-full flex-col justify-center lg:m-0'>
       {url ? (

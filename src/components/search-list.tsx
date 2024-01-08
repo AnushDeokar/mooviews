@@ -49,6 +49,7 @@ function SearchList() {
             >
               <div
                 onClick={() => {
+                  setQuery('');
                   router.push(`/shows/${movie.media_type}-${movie.id}`);
                 }}
               >
