@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookText, Heart, PenSquare } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -24,6 +24,13 @@ function ShowDescription({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { mutateAsync } = trpc.favourites.switchAddToFavourites.useMutation();
+  console.log('details', showDetails);
+
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleWatchListChange = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -51,8 +58,8 @@ function ShowDescription({
   return (
     <div className='flex  h-full flex-col justify-center md:text-left'>
       <div className='flex flex-col gap-2'>
-        <h1 className='hidden text-xl font-semibold md:text-3xl lg:block'>
-          {showDetails.title}
+        <h1 className='hidden text-xl font-semibold md:text-3xl lg:flex'>
+          {showDetails.title || showDetails.original_title}
         </h1>
         <h3 className='text-xl font-semibold text-gray-100 lg:hidden'>Plot</h3>
         <p className='text-gray-400'>{showDetails.overview}</p>

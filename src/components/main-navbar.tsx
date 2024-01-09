@@ -12,8 +12,8 @@ import SearchList from './search-list';
 function MainNavbar({ user }: { user: User | null | undefined }) {
   const { setQuery, setMovies, setMoviesLoading } = useSearchStore();
   return (
-    <div className='flex flex-col gap-12'>
-      <nav className='flex items-center justify-between py-10'>
+    <nav className='flex flex-col gap-12'>
+      <div className='flex items-center justify-between py-10'>
         <Link className='inline text-5xl font-semibold text-red-700' href='/'>
           M<span className='hidden text-3xl md:inline'>ooviews</span>
         </Link>
@@ -30,9 +30,11 @@ function MainNavbar({ user }: { user: User | null | undefined }) {
           />
           <ProfileButton user={user} />
         </div>
-      </nav>
-      <SearchList />
-    </div>
+      </div>
+      {typeof window !== 'undefined' && window.location.pathname !== '/' && (
+        <SearchList />
+      )}
+    </nav>
   );
 }
 
