@@ -6,7 +6,9 @@ import { ProfileMenu } from './profile-menu';
 
 function ProfileButton({ user }: { user: User | null | undefined }) {
   return (
-    <div>{user ? <ProfileMenu /> : <AuthModalComponent user={user} />}</div>
+    <div>
+      {user ? <ProfileMenu user={user} /> : <AuthModalComponent user={user} />}
+    </div>
   );
 }
 

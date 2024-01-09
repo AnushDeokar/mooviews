@@ -23,7 +23,7 @@ function VideoPlayer({ url, backdrop }: { url: string; backdrop: string }) {
       {url ? (
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${url}`}
-          playing={false}
+          playing={true}
           width='100%'
           muted={isMuted}
         />

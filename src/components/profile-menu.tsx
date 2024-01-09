@@ -4,12 +4,13 @@ import { CaretRight, Gear, Money, SignOut, SquaresFour } from 'phosphor-react';
 import { signOut } from 'next-auth/react';
 import { Heart } from 'lucide-react';
 import Link from 'next/link';
+import type { User } from 'next-auth';
 
-export const ProfileMenu = () => {
+export const ProfileMenu = ({ user }: { user: User | null | undefined }) => {
   return (
     <div>
       <Dropdown
-        label='A'
+        label={user && user.name ? user.name[0] : 'A'}
         size='md'
         dismissOnClick={true}
         className='flex h-10 items-center justify-center rounded-md bg-pink-700 px-0 text-lg font-semibold text-white hover:bg-pink-700'

@@ -6,11 +6,17 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useSearchStore } from '@/states/search-movies';
 
 function ShowsSlider({ shows, header }: { shows: Show[]; header?: string }) {
   const router = useRouter();
   const scrollDivRef = React.useRef<HTMLDivElement>(null);
   const [isScrollable, setIsScrollable] = React.useState(false);
+  const { query } = useSearchStore();
+
+  if (query !== '') {
+    return null;
+  }
 
   const scrollHorizontal = (direction: 'left' | 'right') => {
     if (!scrollDivRef.current) return;

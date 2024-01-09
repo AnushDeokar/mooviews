@@ -27,13 +27,6 @@ export default async function Home() {
       {alllGenres.map((details, i) => (
         <ShowsSlider header={details.header} shows={details.shows} key={i} />
       ))}
-      <div className='mt-12'>
-        <MovieCategory
-          homePageMovies={movies}
-          header='Popular Right Now'
-          isHome={true}
-        />
-      </div>
       <SearchList />
     </div>
   );

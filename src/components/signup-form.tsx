@@ -10,25 +10,21 @@ import { trpc } from '@/utils/trpc';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod';
+import z, { ZodError } from 'zod';
 
 const authSchema = z.object({
-  name: z.string().min(5, {
-    message: 'username should be atleast 5 characters',
+  name: z.string().min(3, {
+    message: 'name should be atleast 3 characters',
   }),
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
   password: z
     .string()
-    .min(8, {
-      message: 'Password must be at least 8 characters long',
+    .min(5, {
+      message: 'Password must be at least 5 characters long',
     })
-    .max(100)
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, {
-      message:
-        'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character',
-    }),
+    .max(100),
 });
 
 type formInputs = z.infer<typeof authSchema>;
@@ -57,6 +53,24 @@ function SignupForm({ setIsSignIn, showModalX, onClickTwo }: ISignInForm) {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
+    const { name, email, password } = data;
+    try {
+      const parsedData = authSchema.parse({
+        name,
+        email,
+        password,
+      });
+      console.log('Data is valid:', parsedData);
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        console.error('Unexpected error:', error);
+      }
+      setIsLoading(false);
+      return;
+    }
+
     try {
       // await fetch()
       if (formState.errors.name?.message) {
