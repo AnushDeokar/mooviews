@@ -2,7 +2,6 @@
 import { motion, AnimatePresence, Variant, Variants } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Page } from 'framer';
-import { transform } from 'framer-motion';
 
 const images = [
   "url('image2.jpg')",
@@ -11,8 +10,6 @@ const images = [
   "url('image5.jpg')",
   "url('image6.jpg')",
 ];
-
-const pages = [1, 2, 3, 4, 5];
 
 const indicatorSize = 10;
 const indicatorPadding = 10;

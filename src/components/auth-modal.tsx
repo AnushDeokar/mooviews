@@ -3,9 +3,6 @@ import { useState } from 'react';
 import { User } from '@prisma/client';
 import SignInForm from './signin-form';
 import SignupForm from './signup-form';
-import { Avatar } from 'keep-react';
-import { Dropdown } from 'keep-react';
-import { ProfileMenu } from './profile-menu';
 
 export const AuthModalComponent = ({
   user,

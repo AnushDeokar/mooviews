@@ -20,7 +20,7 @@ function SearchList() {
 
   if (moviesLoading) {
     return (
-      <div className='m-40 flex w-full justify-center'>
+      <div className='my-40 flex w-full justify-center'>
         <Spinner color='failure' size='lg' />
       </div>
     );

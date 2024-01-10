@@ -54,6 +54,7 @@ function AddReviewModal({
         review: text,
         movieId: showDetails.id,
       });
+      toast.success('Successfully added review!');
     } catch (err) {
       toast.error('Please log in to add a review');
     }

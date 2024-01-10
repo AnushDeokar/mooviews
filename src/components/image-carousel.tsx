@@ -1,9 +1,7 @@
 'use client';
 
-// import photos from "../public/photos.json";
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ImageCarousel({ movies }: { movies: any }) {
@@ -30,13 +28,6 @@ export default function ImageCarousel({ movies }: { movies: any }) {
       setIndex(index + 1);
     } else {
       setIndex(0);
-    }
-  }
-  function prevImage() {
-    if (index > 0) {
-      setIndex(index - 1);
-    } else {
-      setIndex(images.length - 1);
     }
   }
 

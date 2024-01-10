@@ -13,7 +13,7 @@ export const ProfileMenu = ({ user }: { user: User | null | undefined }) => {
         label={user && user.name ? user.name[0] : 'A'}
         size='md'
         dismissOnClick={true}
-        className='flex h-10 items-center justify-center rounded-md bg-pink-700 px-0 text-lg font-semibold text-white hover:bg-pink-700'
+        className='flex h-10 items-center justify-center rounded-md bg-red-700 px-0 text-lg font-semibold text-white hover:bg-red-700'
         style={{ fontSize: '80px' }}
         arrowIcon={false}
       >
