@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 
 export default function ImageCarousel({ movies }: { movies: any }) {
-  const images = movies.map(
+  const images = movies?.map(
     (movie: any) => `https://image.tmdb.org/t/p/original/${movie.poster_path}`
   );
   const divRef = useRef<HTMLDivElement>(null);
